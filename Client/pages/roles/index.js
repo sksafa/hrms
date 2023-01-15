@@ -9,39 +9,40 @@ import {
     CardSubtitle,
     Button,
 } from "reactstrap";
-// import axios from 'axios';
-// import { toast, ToastContainer } from 'react-toastify'
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify'
 
 const index = () => {
-    // const [loadData, setLoadData] = useState([]);
-    // useEffect(() => {
-    //     getRoles()
-    // }, [])
 
-    // const getRoles = async () => {
-    //     try {
-    //         const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/app_details?page=${currentPage}&${Math.random()}`);
-    //         setLoadData(data.data)
-    //         setTotalCount(data.dataCount);
-    //         setResultPerPage(data.resultPerPage);
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
+    const [loadData, setLoadData] = useState([]);
+    useEffect(() => {
+        getRoles()
+    }, [])
 
-    // const style = { color: 'green', fontSize: '20px', cursor: 'pointer' }
-    // const delStyle = { color: 'red', fontSize: '20px', cursor: 'pointer', marginLeft: '5px' }
+    const getRoles = async () => {
+        try {
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/roles`);
+            console.log("first", data)
+            setLoadData(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-    // const handleDelete = async (id) => {
-    //     try {
-    //         alert("Are Your Sure to Delete")
-    //         const { data } = await axios.delete(`${process.env.NEXT_PUBLIC_API}/app_details_delete/${id}`);
-    //         toast.success("App Deleted Successfully");
-    //         getAppsDetails()
-    //     } catch (error) {
-    //         toast.error(error);
-    //     }
-    // }
+    const x = `${process.env.NEXT_PUBLIC_API}`
+    const style = { color: 'green', fontSize: '20px', cursor: 'pointer' }
+    const delStyle = { color: 'red', fontSize: '20px', cursor: 'pointer', marginLeft: '5px' }
+
+    const handleDelete = async (id) => {
+        try {
+            alert("Are Your Sure to Delete")
+            const { data } = await axios.delete(`${process.env.NEXT_PUBLIC_API}/role-delete/${id}`);
+            toast.success("App Deleted Successfully");
+            getRoles()
+        } catch (error) {
+            toast.error(error);
+        }
+    }
 
     return (
         <div>
@@ -51,17 +52,14 @@ const index = () => {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Card>
-                <h2>Safawat Hossain </h2>
-            </Card>
-            {/* <Card>
                 <CardBody>
-                    <CardTitle tag="h5">Applications</CardTitle>
+                    <CardTitle tag="h5">Roles List</CardTitle>
                     <CardSubtitle className="mb-2 text-muted" tag="h6">
                         <div className='d-flex justify-content-between'>
-                            <h6> Quran Admin Web</h6>
+                            <h6> Hrms</h6>
                             <Link href="applications/create">
                                 <Button className="btn" color="primary">
-                                    Add Applications
+                                    Add Roles
                                 </Button>
                             </Link>
                         </div>
@@ -82,10 +80,7 @@ const index = () => {
                             <thead>
                                 <tr>
                                     <th>Sl</th>
-                                    <th>Application</th>
-                                    <th>Primary Topic</th>
-                                    <th>Firebase Token</th>
-                                    <th>App Url</th>
+                                    <th>Name</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -94,9 +89,6 @@ const index = () => {
                                     <tr className="border-top" key={key}>
                                         <td>{key + 1}</td>
                                         <td>{data.name}</td>
-                                        <td>{(data.primary_topic)}</td>
-                                        <td>{(data.firebase_token).slice(0, 25)}</td>
-                                        <td>{data.app_url}</td>
                                         <td>
                                             <i className="bi bi-pencil-square" style={style} onClick={() => router.push(`/applications/${data._id}`)}></i>
                                             <i className="bi bi-trash" style={delStyle} onClick={() => handleDelete(data._id)}></i>
@@ -106,12 +98,11 @@ const index = () => {
                                 ))}
                             </tbody>
                         </Table>
-
                     </div>
                 </CardBody>
                 <CardBody>
                 </CardBody>
-            </Card> */}
+            </Card>
         </div>
     )
 }

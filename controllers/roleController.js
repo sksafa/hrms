@@ -19,3 +19,14 @@ export const getRoleController= async(req, res)=>{
         console.log(error)
     }
 }
+
+export const getRoleDeleteController = async(req, res)=>{
+    const id = req.params.id
+    try {
+        const data = await roleModel.findByIdAndDelete(id)
+        res.status(200).json("ok")
+    } catch (error) {
+        console.log(error)
+    }
+
+}
